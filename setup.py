@@ -11,7 +11,7 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['gevent']
+requirements = ['gevent', 'docopt', 'requests']
 
 setup_requirements = ['pytest-runner', ]
 
@@ -47,4 +47,10 @@ setup(
     url='https://github.com/benthomasson/gevent-fsm',
     version='0.1.0',
     zip_safe=False,
+    entry_points={
+        'console_scripts': [
+            'get_fsm = gevent_fsm.tools.get_fsm:main',
+            'fsm_generate_diffs = gevent_fsm.tools.fsm_generate_diffs:main',
+        ],
+    }
 )
