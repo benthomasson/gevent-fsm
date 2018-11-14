@@ -4,7 +4,7 @@ import gevent
 from gevent.queue import Queue
 
 from .conf import settings
-import .messages as messages
+from . import messages
 
 
 class _Channel(object):
