@@ -51,6 +51,8 @@ setup(
         'console_scripts': [
             'get_fsm = gevent_fsm.tools.get_fsm:main',
             'fsm_generate_diffs = gevent_fsm.tools.fsm_generate_diffs:main',
+            'extract_fsm = gevent_fsm.tools.extract_fsm:main',
+            'fsm_diff = gevent_fsm.tools.fsm_diff:main',
         ],
     }
 )

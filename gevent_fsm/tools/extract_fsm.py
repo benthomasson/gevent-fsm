@@ -15,7 +15,7 @@ import logging
 import sys
 import os
 import yaml
-from gevent_pipeline.fsm import State
+from gevent_fsm.fsm import State
 
 logger = logging.getLogger('extract')
 
@@ -57,10 +57,10 @@ def main(args=None):
                         transitions.append(dict(from_state=obj_name,
                                                 to_state=transition,
                                                 label=fn_name))
-            states.append(obj_name)
+            states.append(dict(label=obj_name))
 
 
-    print yaml.dump(data, default_flow_style=False)
+    print(yaml.dump(data, default_flow_style=False))
 
     return 0
 
