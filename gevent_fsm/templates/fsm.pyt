@@ -1,5 +1,5 @@
 
-from gevent_pipeline.fsm import State, transitions
+from gevent_fsm.fsm import State, transitions
 
 
 {% for state in states%}
