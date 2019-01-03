@@ -76,7 +76,7 @@ def main(args=None):
     with open(parsed_args['<b>']) as f:
         b = yaml.load(f.read())
 
-    data = fsm_diff(a, b, silent=False)
+    data = fsm_diff(a, b, parsed_args['<a>'], parsed_args['<b>'], silent=False)
 
     if parsed_args['<output>']:
         with open(parsed_args['<output>'], 'w') as f:

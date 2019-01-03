@@ -4,7 +4,8 @@
 
 """
 Usage:
-    fsm_generate_diffs [options] <design> <implementation>
+    fsm_generate_diffs [options] python <design> <implementation>
+    fsm_generate_diffs [options] javascript <design> <implementation>
 
 Options:
     -h, --help        Show this page
@@ -46,8 +47,15 @@ def main(args=None):
 
     if parsed_args['--initial']:
         b = dict(states=[], transitions=[])
-    else:
+    elif parsed_args['javascript']:
         p = Popen(['./extract.js', implementation], stdout=PIPE)
+        output = p.communicate()[0]
+        if p.returncode == 0:
+            b = yaml.load(output)
+        else:
+            return 1
+    elif parsed_args['python']:
+        p = Popen([find_executable('extract_fsm'), implementation], stdout=PIPE)
         output = p.communicate()[0]
         if p.returncode == 0:
             b = yaml.load(output)
@@ -63,7 +71,11 @@ def main(args=None):
     logger.debug(pformat(data))
 
     env = Environment(loader=PackageLoader("gevent_fsm", "templates"))
-    template = env.get_template('fsm.pyt')
+
+    if parsed_args['python']:
+        template = env.get_template('fsm.pyt')
+    elif parsed_args['javascript']:
+        template = env.get_template('fsm.jst')
 
     if parsed_args['--initial']:
         with open(implementation, "w") as f:

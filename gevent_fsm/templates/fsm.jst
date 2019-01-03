@@ -1,0 +1,42 @@
+var inherits = require('inherits')
+
+function Controller () {
+    this.state = null
+
+}
+exports.Controller = Controller
+
+Controller.prototype.changeState = function (state) {
+    console.log('changeState: ' + state.constructor.name)
+    if (this.state != null) {
+        this.state.end(this)
+    }
+    this.state = state
+    if (this.state != null) {
+        this.state.start(this)
+    }
+}
+function _State () {
+    _State.prototype.start = function (controller) {
+    }
+    _State.prototype.end = function (controller) {
+    }
+}
+var State = new _State()
+exports.State = State
+exports._State = _State
+{%for state, functions in states%}
+function _{{state}} () {
+}
+inherits(_{{state}}, _State)
+{%for f_name, transitions in functions %}
+_{{state}}.prototype.{{f_name}} = function (controller) {
+{%for t in transitions%}
+    controller.changeState({{t.to_state}})
+{%endfor%}}
+_{{state}}.prototype.{{f_name}}.transitions = [{%for t in transitions%}'{{t.to_state}}'{% if not loop.last%}, {%endif%}{%endfor%}]
+{%endfor%}
+var {{state}} = new _{{state}}()
+exports.{{state}} = {{state}}
+{%endfor%}
+
