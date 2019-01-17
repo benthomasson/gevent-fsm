@@ -16,3 +16,11 @@ History
 ------------------
 
 * Fixes python 3 import statement
+
+
+0.2.2 (2019-01-17)
+------------------
+
+* Fixes packaging of gevent.tools
+
+
