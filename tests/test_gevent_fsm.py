@@ -6,7 +6,7 @@
 import pytest
 
 
-from gevent_fsm import gevent_fsm
+import gevent_fsm
 
 
 @pytest.fixture
